@@ -1,15 +1,28 @@
 :root {
   color-scheme: light;
-  --paper: rgba(248, 251, 255, 0.82);
+  --paper: rgba(246, 250, 255, 0.84);
   --paper-strong: #ffffff;
-  --ink: #102033;
-  --muted: #607086;
-  --accent: #19466f;
-  --accent-dark: #0f3150;
-  --deep: #102842;
+  --ink: #0e1d2f;
+  --muted: #5a6c84;
+  --accent: #123c63;
+  --accent-dark: #0b2944;
+  --deep: #0b2138;
   --line: rgba(16, 32, 51, 0.1);
   --shadow: 0 28px 70px rgba(16, 32, 51, 0.12);
   --radius: 28px;
+}
+
+body[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: rgba(13, 24, 39, 0.84);
+  --paper-strong: #122338;
+  --ink: #e7eef8;
+  --muted: #95a8bf;
+  --accent: #153f67;
+  --accent-dark: #90b7e0;
+  --deep: #08192b;
+  --line: rgba(173, 196, 223, 0.12);
+  --shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
 }
 
 * {
@@ -25,6 +38,13 @@ body {
     radial-gradient(circle at top left, rgba(92, 144, 196, 0.26), transparent 30%),
     radial-gradient(circle at bottom right, rgba(28, 70, 111, 0.18), transparent 24%),
     linear-gradient(135deg, #eef5fb, #dfeaf5 42%, #edf3f8);
+}
+
+body[data-theme="dark"] {
+  background:
+    radial-gradient(circle at top left, rgba(35, 86, 138, 0.24), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(7, 22, 40, 0.38), transparent 24%),
+    linear-gradient(135deg, #07111b, #0c1725 42%, #122132);
 }
 
 .shell {
@@ -45,6 +65,13 @@ body {
 
 .hero {
   padding: 40px;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
 }
 
 .panel {
@@ -97,6 +124,15 @@ h2 {
 .field {
   display: grid;
   gap: 12px;
+}
+
+.theme-toggle {
+  min-height: 44px;
+  padding: 0 16px;
+  background: transparent;
+  color: var(--accent-dark);
+  border: 1px solid var(--line);
+  box-shadow: none;
 }
 
 .hero-actions {
@@ -172,8 +208,8 @@ textarea {
 }
 
 textarea:focus {
-  outline: 2px solid rgba(231, 111, 81, 0.25);
-  border-color: rgba(231, 111, 81, 0.45);
+  outline: 2px solid rgba(18, 60, 99, 0.25);
+  border-color: rgba(18, 60, 99, 0.45);
 }
 
 .grid-panels {
@@ -212,6 +248,11 @@ textarea:focus {
   .mini-panel {
     padding: 22px;
     border-radius: 20px;
+  }
+
+  .hero-top {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   h1 {

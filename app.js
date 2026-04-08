@@ -2,11 +2,15 @@ const bookmarkCodeEl = document.querySelector("#bookmarkCode");
 const copyButton = document.querySelector("#copyButton");
 const dragBookmark = document.querySelector("#dragBookmark");
 const statusEl = document.querySelector("#status");
+const themeToggle = document.querySelector("#themeToggle");
+
+const INSTALLER_THEME_KEY = "passboard-installer-theme";
 
 function dashboardBookmark() {
   const OVERLAY_ID = "codex-canvas-dashboard";
   const STYLE_ID = "codex-canvas-dashboard-style";
   const STORAGE_KEY = "codex-canvas-dashboard-dismissed";
+  const THEME_KEY = "codex-canvas-dashboard-theme";
   const host = location.hostname.toLowerCase();
 
   if (!host.includes("instructure.com") && !document.querySelector('meta[name="csrf-token"]')) {
@@ -23,6 +27,7 @@ function dashboardBookmark() {
 
   const TARGET_ORIGIN = location.origin;
   const dismissedAssignments = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+  const currentTheme = localStorage.getItem(THEME_KEY) || "light";
   const style = document.createElement("style");
   style.id = STYLE_ID;
   style.textContent = `
@@ -84,12 +89,26 @@ function dashboardBookmark() {
 .codex-empty,.codex-error,.codex-loading{padding:16px;border-radius:18px;background:#f8fbfe;color:#5f6b6d}
 .codex-error{background:#fff0ec;color:#8a2d1d}
 .codex-toast{position:fixed;right:24px;bottom:24px;background:#14304a;color:#fff;padding:14px 16px;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,.22);max-width:320px}
+[data-theme="dark"]#${OVERLAY_ID}{background:linear-gradient(160deg,rgba(2,8,14,.84),rgba(7,18,31,.84));color:#e8eef7}
+[data-theme="dark"]#${OVERLAY_ID} .codex-shell{background:linear-gradient(180deg,#0b1520,#101b28 45%,#152332);border-color:rgba(159,184,215,.12)}
+[data-theme="dark"]#${OVERLAY_ID} .codex-title p,[data-theme="dark"]#${OVERLAY_ID} .codex-utility-title span,[data-theme="dark"]#${OVERLAY_ID} .codex-section-title span,[data-theme="dark"]#${OVERLAY_ID} .codex-meta,[data-theme="dark"]#${OVERLAY_ID} .codex-metric span,[data-theme="dark"]#${OVERLAY_ID} .codex-gpa-box span{color:#95a8bf}
+[data-theme="dark"]#${OVERLAY_ID} .codex-button{background:#0f3a63}
+[data-theme="dark"]#${OVERLAY_ID} .codex-button.alt{background:#17304a;color:#d9e7f7}
+[data-theme="dark"]#${OVERLAY_ID} .codex-panel,[data-theme="dark"]#${OVERLAY_ID} .codex-utility,[data-theme="dark"]#${OVERLAY_ID} .codex-section,[data-theme="dark"]#${OVERLAY_ID} .codex-day,[data-theme="dark"]#${OVERLAY_ID} .codex-gpa-box{background:#122131;border-color:rgba(159,184,215,.12)}
+[data-theme="dark"]#${OVERLAY_ID} .codex-metric,[data-theme="dark"]#${OVERLAY_ID} .codex-item,[data-theme="dark"]#${OVERLAY_ID} .codex-course,[data-theme="dark"]#${OVERLAY_ID} .codex-empty,[data-theme="dark"]#${OVERLAY_ID} .codex-loading{background:#162738;border-color:rgba(159,184,215,.12);color:#dce7f3}
+[data-theme="dark"]#${OVERLAY_ID} .codex-link{color:#f3f8ff}
+[data-theme="dark"]#${OVERLAY_ID} .codex-pill{background:#21364b;color:#d9e7f7}
+[data-theme="dark"]#${OVERLAY_ID} .codex-mini{background:#21364b;color:#d9e7f7}
+[data-theme="dark"]#${OVERLAY_ID} .codex-mini.ai{background:#0f3a63}
+[data-theme="dark"]#${OVERLAY_ID} .codex-chevron{background:#21364b;color:#d9e7f7}
+[data-theme="dark"]#${OVERLAY_ID} .codex-section[open] .codex-chevron{background:#0f3a63}
 @media (max-width:720px){.codex-shell{inset:8px;padding:14px;border-radius:24px}.codex-topbar{flex-direction:column}.codex-overview{grid-template-columns:1fr}.codex-section summary{padding:16px}.codex-utility-top{flex-direction:column}}
   `;
   document.head.appendChild(style);
 
   const overlay = document.createElement("div");
   overlay.id = OVERLAY_ID;
+  overlay.dataset.theme = currentTheme;
   overlay.innerHTML = `
     <div class="codex-shell">
       <div class="codex-topbar">
@@ -98,6 +117,7 @@ function dashboardBookmark() {
           <p>Everything in one place, with collapsible sections for classes, missing work, due dates, tests, and study help.</p>
         </div>
         <div class="codex-actions">
+          <button class="codex-button alt" data-action="toggle-theme">Dark mode</button>
           <button class="codex-button alt" data-action="toggle-grades">Grades</button>
           <button class="codex-button alt" data-action="toggle-calendar">Calendar</button>
           <button class="codex-button alt" data-action="toggle-gpa">GPA</button>
@@ -539,6 +559,12 @@ function dashboardBookmark() {
     const action = trigger.dataset.action;
     if (action === "close") { overlay.remove(); style.remove(); return; }
     if (action === "refresh") return load();
+    if (action === "toggle-theme") {
+      overlay.dataset.theme = overlay.dataset.theme === "dark" ? "light" : "dark";
+      localStorage.setItem(THEME_KEY, overlay.dataset.theme);
+      trigger.textContent = overlay.dataset.theme === "dark" ? "Light mode" : "Dark mode";
+      return;
+    }
     if (action === "toggle-missing-popover") {
       overlay.__showMissingPopover = !overlay.__showMissingPopover;
       if (overlay.__dashboardData) {
@@ -589,6 +615,23 @@ dragBookmark.href = bookmarkletCode;
 function setStatus(message, isError = false) {
   statusEl.textContent = message;
   statusEl.style.color = isError ? "#b42318" : "";
+}
+
+function applyInstallerTheme(theme) {
+  document.body.dataset.theme = theme;
+  if (themeToggle) {
+    themeToggle.textContent = theme === "dark" ? "Light mode" : "Dark mode";
+  }
+}
+
+applyInstallerTheme(localStorage.getItem(INSTALLER_THEME_KEY) || "light");
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+    localStorage.setItem(INSTALLER_THEME_KEY, nextTheme);
+    applyInstallerTheme(nextTheme);
+  });
 }
 
 copyButton.addEventListener("click", async () => {
