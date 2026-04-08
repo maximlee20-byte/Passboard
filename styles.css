@@ -1,0 +1,221 @@
+:root {
+  color-scheme: light;
+  --paper: rgba(248, 251, 255, 0.82);
+  --paper-strong: #ffffff;
+  --ink: #102033;
+  --muted: #607086;
+  --accent: #19466f;
+  --accent-dark: #0f3150;
+  --deep: #102842;
+  --line: rgba(16, 32, 51, 0.1);
+  --shadow: 0 28px 70px rgba(16, 32, 51, 0.12);
+  --radius: 28px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(92, 144, 196, 0.26), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(28, 70, 111, 0.18), transparent 24%),
+    linear-gradient(135deg, #eef5fb, #dfeaf5 42%, #edf3f8);
+}
+
+.shell {
+  width: min(980px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 48px 0 72px;
+}
+
+.hero,
+.panel,
+.mini-panel {
+  background: var(--paper);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  padding: 40px;
+}
+
+.panel {
+  margin-top: 22px;
+  padding: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--accent-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 1.05;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  max-width: 11ch;
+  letter-spacing: -0.05em;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+.lede,
+.status,
+.small,
+.steps,
+.field span,
+.mini-panel p {
+  color: var(--muted);
+}
+
+.lede {
+  margin: 18px 0 0;
+  max-width: 64ch;
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.hero-actions,
+.field {
+  display: grid;
+  gap: 12px;
+}
+
+.hero-actions {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 28px;
+}
+
+.field {
+  margin-top: 18px;
+}
+
+.field span {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+button,
+.bookmarklet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: none;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    background-color 140ms ease;
+}
+
+button {
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 12px 24px rgba(25, 70, 111, 0.2);
+}
+
+.bookmarklet {
+  background: var(--deep);
+  color: #f6f1ea;
+}
+
+button:hover,
+.bookmarklet:hover {
+  transform: translateY(-1px);
+}
+
+.status {
+  margin: 16px 0 0;
+  line-height: 1.5;
+}
+
+.steps {
+  margin: 14px 0 0;
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper-strong);
+  font: 0.92rem/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  color: var(--ink);
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: 2px solid rgba(231, 111, 81, 0.25);
+  border-color: rgba(231, 111, 81, 0.45);
+}
+
+.grid-panels {
+  display: grid;
+  gap: 16px;
+}
+
+.mini-panel {
+  padding: 20px;
+}
+
+.mini-panel p,
+.note p {
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.small {
+  font-size: 0.94rem;
+}
+
+@media (min-width: 760px) {
+  .grid-panels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(100vw - 20px, 980px);
+    padding-top: 20px;
+  }
+
+  .hero,
+  .panel,
+  .mini-panel {
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  h1 {
+    max-width: none;
+    font-size: 2.5rem;
+  }
+}

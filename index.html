@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Install Student Dashboard Bookmark</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Bookmark install page</p>
+        <h1>Install your student dashboard bookmark in a minute.</h1>
+        <p class="lede">
+          This page helps you install a bookmark, not a browser extension. Once you save it, click it on Canvas to open a
+          smarter dashboard for your real classes, missing work, due dates, tests, and study prompts.
+        </p>
+
+        <div class="hero-actions">
+          <a id="dragBookmark" class="bookmarklet ready" href="#">Drag This Bookmark</a>
+          <button id="copyButton" type="button">Copy bookmark code</button>
+        </div>
+
+        <p id="status" class="status">Press copy, or drag the bookmark button to your bookmarks bar.</p>
+      </section>
+
+      <section class="panel">
+        <h2>Fastest install</h2>
+        <ol class="steps">
+          <li>Show your bookmarks bar in Chrome with <strong>Cmd + Shift + B</strong> if it is hidden.</li>
+          <li>Drag <strong>Drag This Bookmark</strong> to the bookmarks bar.</li>
+          <li>Open your Canvas website and sign in.</li>
+          <li>Click the new bookmark to open your dashboard.</li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h2>Manual install</h2>
+        <ol class="steps">
+          <li>Create a new bookmark in your browser.</li>
+          <li>Name it <strong>Student Dashboard</strong>.</li>
+          <li>Click <strong>Copy bookmark code</strong> below.</li>
+          <li>Paste that code into the bookmark URL field.</li>
+          <li>Save it, then click it while you are on Canvas.</li>
+        </ol>
+
+        <label class="field" for="bookmarkCode">
+          <span>Bookmark code</span>
+          <textarea id="bookmarkCode" readonly spellcheck="false"></textarea>
+        </label>
+      </section>
+
+      <section class="panel grid-panels">
+        <article class="mini-panel">
+          <h2>Chrome</h2>
+          <p>Open the page, show your bookmarks bar, then drag the bookmark button onto it.</p>
+        </article>
+
+        <article class="mini-panel">
+          <h2>Safari</h2>
+          <p>Show the Favorites Bar, make a new bookmark, then paste the copied code into the address field.</p>
+        </article>
+
+        <article class="mini-panel">
+          <h2>What it filters</h2>
+          <p>It tries to keep real classes and hide obvious filler spaces like advisory, sandbox, or orientation courses.</p>
+        </article>
+      </section>
+
+      <section class="panel note">
+        <h2>What happens when you click it</h2>
+        <p>The bookmark opens a fullscreen Canvas dashboard with your classes, a needs-attention section, missing assignments, work due this week, upcoming tests and quizzes, local done-tracking, and one-click study prompts.</p>
+        <p class="small">If your school locks down some Canvas data, a section may show an error message instead of data. Study prompts are designed to help you learn the material, not submit work dishonestly.</p>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
